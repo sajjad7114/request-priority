@@ -117,11 +117,18 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/users/<Id>")
+@app.route("/users/<Id>", methods=["POST", "GET"])
 def user_page(Id):
+    usr = None
     for user in users:
         if user.id == int(Id):
-            return render_template("user.html", user=user.name)
+            usr = user
+    if usr:
+        if request.method == "POST":
+            job_title = request.form["job_title"]
+            job = [job for job in jobs if job.title == job_title][0]
+            usr.add_work(Work(job))
+        return render_template("user.html", user=usr, jobs=jobs)
 
     return redirect(url_for("home"))
 
