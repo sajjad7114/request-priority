@@ -6,14 +6,17 @@
     <p>Your weight is {{user.weight}}</p>
     <div style="margin-bottom:2rem">
         {% for done_work in user.done %}
-            <a href="#" style="background-color:green; padding:1rem; display:inline-block">
+            <a href="#" style="background-color:green; padding:1rem; display:inline-block; margin:3px">
                 {{done_work.job.title}}
             </a>
         {% endfor %}
 
         {% for pending_work in user.queue %}
-        <div style="background-color:yellow; padding:1rem; display:inline-block">
+        <div style="background-color:yellow; padding:1rem; display:inline-block; margin:3px">
             {{pending_work.job.title}}
+            {% if pending_work.rank == current %}
+                <p>in process</p>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

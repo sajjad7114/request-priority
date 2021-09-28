@@ -13,6 +13,8 @@ app = Flask(__name__)
 
 
 def limited_f(work):
+    global current_work
+    current_work = work.rank
     r = random() * ord(work.job.title[0]) * 3
     print("from limited", r)
     if SPEED > 0:
@@ -95,6 +97,7 @@ class User:
         del self.queue[0]
         self.done.append(work)
         work.done(t, int(t))
+        self.credit -= t
         if len(self.queue) == 0:
             self.first_pending_work = -1
         else:
@@ -128,7 +131,7 @@ def user_page(Id):
             job_title = request.form["job_title"]
             job = [job for job in jobs if job.title == job_title][0]
             usr.add_work(Work(job))
-        return render_template("user.html", user=usr, jobs=jobs)
+        return render_template("user.html", user=usr, jobs=jobs, current=current_work)
 
     return redirect(url_for("home"))
 
@@ -137,7 +140,9 @@ if __name__ == "__main__":
     number_of_works = 0
     number_of_done_works = 0
     number_of_users = 0
+    current_work = -1
     jobs = [Job("x"), Job("y"), Job("z")]
     users = list()
-
+    thread = threading.Thread(target=assign)
+    thread.start()
     app.run(debug=True)
