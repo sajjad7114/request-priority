@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Work Page{% endblock %}
+{% block content %}
+    <h2>{{work.job.title}}</h2>
+    <p>User: {{uname}}</p>
+    <p>This work has been finished</p>
+    <p>Result: {{work.result}}</p>
+    <p>Duration: {{work.duration}}</p>
+{% endblock %}

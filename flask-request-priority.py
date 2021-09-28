@@ -106,7 +106,7 @@ class User:
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", users=users)
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -134,6 +134,20 @@ def user_page(Id):
         return render_template("user.html", user=usr, jobs=jobs, current=current_work)
 
     return redirect(url_for("home"))
+
+
+@app.route("/works/<uid>/<rank>")
+def works(uid, rank):
+    try:
+        user = [user for user in users if user.id == int(uid)][0]
+        work = [work for work in user.done if work.rank == int(rank)][0]
+        if work:
+            return render_template("work.html", work=work, uname=user.name)
+        return f"""<h1>Not Found</h1>
+                <p>The {user.name} is not own {work.job.title} work with rank {rank} or it has not finished yet</p>"""
+    except:
+        return f"""<h1>Not Found</h1>
+                <p>A user with id {uid} or a work with rank {rank} is not own found</p>"""
 
 
 if __name__ == "__main__":
