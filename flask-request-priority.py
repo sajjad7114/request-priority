@@ -119,12 +119,8 @@ def login():
 
 @app.route("/users/<Id>")
 def user_page(Id):
-    print(Id)
-    print([u.id for u in users])
     for user in users:
-        print(user.id)
         if user.id == int(Id):
-            print('kir')
             return render_template("user.html", user=user.name)
 
     return redirect(url_for("home"))
