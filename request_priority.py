@@ -108,6 +108,7 @@ class User:
         del self.queue[0]
         self.done.append(work)
         work.job.done(time)
+        self.credit -= time
         if len(self.queue) == 0:
             self.first_pending_work = -1
         else:
