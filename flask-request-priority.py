@@ -109,15 +109,15 @@ def home():
     return render_template("index.html", users=users)
 
 
-@app.route("/login", methods=["POST", "GET"])
-def login():
+@app.route("/register", methods=["POST", "GET"])
+def register():
     if request.method == "POST":
         user_name = request.form["nm"]
         usr = User(user_name, randint(1, 10))
         users.append(usr)
         return redirect(url_for("user_page", Id=usr.id))
     else:
-        return render_template("login.html")
+        return render_template("register.html")
 
 
 @app.route("/users/<Id>", methods=["POST", "GET"])

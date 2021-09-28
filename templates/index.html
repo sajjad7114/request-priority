@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
 {% block content %}
-    <h2>Test</h2>
+    <h2>Users:</h2>
+    <div>
+        {% for user in users %}
+            <a href="/users/{{user.id}}"
+               style="background-color:#eee; padding:1rem; display:inline-block; margin:3px; text-decoration:none">
+                {{user.name}}
+            </a>
+        {% endfor %}
+    </div>
+    <a href="/register"
+       style="background-color:black; color:white; padding:1rem; display:inline-block; margin:3px; text-decoration:none">
+        register
+    </a>
 {% endblock %}
